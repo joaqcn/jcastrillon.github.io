@@ -26,3 +26,7 @@ npm run dev
 ```bash
 npm run build
 ```
+
+## GitHub Pages
+
+This repo includes a GitHub Actions workflow that builds the Vite app and deploys the `dist` folder to GitHub Pages on every push to `main`.
