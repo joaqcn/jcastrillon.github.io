@@ -36,7 +36,7 @@ export default function TerminalInput({
               onSubmit();
             }
           }}
-          placeholder="Type start, about, education, experience, projects, skills, contact, or clear"
+          placeholder="Type a command and press Enter"
           spellCheck={false}
           value={value}
         />
