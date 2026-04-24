@@ -16,7 +16,7 @@ const welcomeMessage =
 
 const commandMap = {
   help:
-    "How to use this resume:\nstart      - guided overview for recruiters and hiring managers\nabout      - quick professional summary\neducation  - degree and academic background\nexperience - work experience timeline\nprojects   - featured project highlights\nskills     - technical strengths and tools\ncontact    - email and LinkedIn\nhelp       - show these instructions again\nclear      - reset the screen\n\nNo technical knowledge is needed. Just type one of the words above and press Enter.",
+    "How to use this resume:\nstart    about      - quick professional summary\neducation  - degree and academic background\nexperience - work experience timeline\nprojects   - featured project highlights\nskills     - technical strengths and tools\ncontact    - email and LinkedIn\nhelp       - show these instructions again\nclear      - reset the screen\n\nNo technical knowledge is needed. Just type one of the words above and press Enter.",
   about:
     "Candidate snapshot:\nJoaquin Castrillon is a software engineer based in Orlando, Florida and a Computer Science graduate from the University of Central Florida.\nHe currently works at Leidos QTC Health Services, building AI-enabled AWS workflows, serverless services, and deployment pipelines.\nHis background combines software engineering, cloud infrastructure, automation, document intelligence, Unity development, and user-focused product thinking.",
   contact:
