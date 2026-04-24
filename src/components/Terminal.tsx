@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import TerminalInput from "./TerminalInput";
 
 type EntryKind = "command" | "response";
@@ -16,7 +16,7 @@ const welcomeMessage =
 
 const commandMap = {
   help:
-    "How to use this resume:\nstart    about      - quick professional summary\neducation  - degree and academic background\nexperience - work experience timeline\nprojects   - featured project highlights\nskills     - technical strengths and tools\ncontact    - email and LinkedIn\nhelp       - show these instructions again\nclear      - reset the screen\n\nNo technical knowledge is needed. Just type one of the words above and press Enter.",
+    "How to use this resume:\n    about      - quick professional summary\neducation  - degree and academic background\nexperience - work experience timeline\nprojects   - featured project highlights\nskills     - technical strengths and tools\ncontact    - email and LinkedIn\nhelp       - show these instructions again\nclear      - reset the screen\n\nNo technical knowledge is needed. Just type one of the words above and press Enter.",
   about:
     "Candidate snapshot:\nJoaquin Castrillon is a software engineer based in Orlando, Florida and a Computer Science graduate from the University of Central Florida.\nHe currently works at Leidos QTC Health Services, building AI-enabled AWS workflows, serverless services, and deployment pipelines.\nHis background combines software engineering, cloud infrastructure, automation, document intelligence, Unity development, and user-focused product thinking.",
   contact:
@@ -30,7 +30,7 @@ const commandMap = {
   skills:
     "Technical strengths:\n1. Languages: Java, Python, JavaScript, C, C#, MATLAB, Visual Basic, and VBA.\n2. Cloud and platform work: AWS including EC2, S3, IAM, VPC, RDS, Lambda, plus Terraform, CI/CD, and serverless architecture.\n3. Developer tools: Git, Firebase, MongoDB, Unity, VS Code, Visual Studio, PyCharm, IntelliJ, AWS, and Jira.\n4. Libraries and data tools: pandas, NumPy, Matplotlib, scikit-learn, OpenSearch, and PyTorch.\n5. Strongest themes: AI integration, cloud automation, backend workflows, software engineering, and interactive product development.",
   start:
-    "Guided resume tour:\n1. Start with about for a concise professional summary.\n2. Type experience to review Joaquin's work across Leidos QTC, UCF, and Siemens Energy.\n3. Type education to see academic background and graduation details from UCF.\n4. Type skills to review programming languages, AWS experience, tools, and technical strengths.\n5. Type projects to explore AI and Unity-based projects including Art by AI and Robot X: Resurgence.\n\nThis interface is meant to make resume review faster. You can jump to any section directly at any time.",
+    "Guided resume tour:\n1. Type about for a concise professional summary.\n2. Type experience to review Joaquin's work across Leidos QTC, UCF, and Siemens Energy.\n3. Type education to see academic background and graduation details from UCF.\n4. Type skills to review programming languages, AWS experience, tools, and technical strengths.\n5. Type projects to explore AI and Unity-based projects including Art by AI and Robot X: Resurgence.\n\nThis interface is meant to make resume review faster. You can jump to any section directly at any time.",
 } as const;
 
 function createResponse(command: string) {
@@ -59,6 +59,7 @@ export default function Terminal() {
   const [inputValue, setInputValue] = useState("");
   const historyRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const bottomRef = useRef<HTMLDivElement | null>(null);
   const nextId = useRef(2);
 
   const activeEntry = useMemo(
@@ -87,10 +88,17 @@ export default function Terminal() {
     return () => window.clearTimeout(timeout);
   }, [activeEntry]);
 
-  useEffect(() => {
-    historyRef.current?.scrollTo({
-      top: historyRef.current.scrollHeight,
-      behavior: "smooth",
+  useLayoutEffect(() => {
+    const bottomNode = bottomRef.current;
+
+    if (!bottomNode) {
+      return;
+    }
+
+    window.requestAnimationFrame(() => {
+      bottomNode.scrollIntoView({
+        block: "end",
+      });
     });
   }, [entries]);
 
@@ -179,6 +187,7 @@ export default function Terminal() {
               </article>
             );
           })}
+          <div ref={bottomRef} />
         </div>
 
         <TerminalInput
